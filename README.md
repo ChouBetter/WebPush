@@ -39,9 +39,9 @@ http://white5168.blogspot.com/2017/01/firebase-cloud-messaging-fcm-1.html#.XR1ud
 
 define('API_SERVER_ACCESS_KEY', '伺服器金鑰');
 
-$token = ''; /* FCM 接收端的token */
-$message = ''; ///*要接收的內容*/
-$title = ''; ///*要接收的標題*/
+$token = ''; /* 接收端的token */
+$message = ''; /* 內容 */
+$title = ''; /* 標題 */
 
 $content = array
     (
