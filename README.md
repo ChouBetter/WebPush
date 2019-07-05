@@ -1,6 +1,6 @@
 # WebPush
 
-### KnowHow
+### Knowledge
 
 * Notification（通知）：利用 JavaScript 實作瀏覽器推播通知
 https://cythilya.github.io/2017/07/09/notification/
