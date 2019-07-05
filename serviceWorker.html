@@ -1,0 +1,87 @@
+<html>
+  <head>
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1"
+    />
+    <meta charset="UTF-8" />
+    <title>Notification</title>
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("/serviceWorker.js") // 註冊 Service Worker
+          .then(reg => {
+            console.log("Registration succeeded. Scope is " + reg.scope); // 註冊成功
+          })
+          .catch(error => {
+            console.log("Registration failed with " + error); // 註冊失敗
+          });
+        /*
+        var options = {
+          body: "歡迎"
+        };
+        navigator.serviceWorker.ready.then(function(sw) {
+          sw.showNotification("訂閱成功！！！", options);
+        });
+        */
+        navigator.serviceWorker.ready
+          .then(function(sw) {
+            return sw.pushManager.getSubscription();
+          })
+          .then(function(sub) {
+            if (sub === null) {
+              //建立新的訂閱
+              swRegistration.pushManager
+                .subscribe({
+                  userVisibleOnly: true,
+                  applicationServerKey: "ggyyccpp"
+                })
+                .then(function(newSub) {
+                  alert(JSON.stringify(newSub));
+                  return fetch(
+                    "https://days-pwas-practice.firebaseio.com/subscriptions.json",
+                    {
+                      method: "POST",
+                      headers: {
+                        "Content-TYpe": "application/json",
+                        Accept: "application/json"
+                      },
+                      body: JSON.stringify(newSub)
+                    }
+                  );
+                })
+                .then(function(response) {
+                  // if (response.ok) displayNotification();
+                })
+                .catch(function(err) {
+                  console.log("訂閱失敗", err);
+                });
+            } else {
+              //已經訂閱
+            }
+          });
+      }
+
+      var notifyConfig = {
+        body: "\\ ^o^ /", // 設定內容
+        icon: "/images/favicon.ico" // 設定 icon
+      };
+
+      document.addEventListener("DOMContentLoaded", function(event) {
+        if (!("Notification" in window)) {
+          console.log("This browser does not support notification");
+        } else if (Notification.permission === "granted") {
+        } else if (Notification.permission !== "denied") {
+          Notification.requestPermission(function(permission) {
+            if (permission === "granted") {
+              var notification = new Notification("Hi there!", notifyConfig);
+            }
+          });
+        }
+      });
+    </script>
+  </head>
+  <body>
+    Notification Hello world!
+  </body>
+</html>

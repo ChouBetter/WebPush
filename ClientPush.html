@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1"
+    />
+    <meta charset="UTF-8" />
+    <title>Notification</title>
+    <script>
+      var notifyConfig = {
+        body: "\\ ^o^ /", // 設定內容
+        icon: "/images/favicon.ico" // 設定 icon
+      };
+
+      document.addEventListener("DOMContentLoaded", function(event) {
+        if (!("Notification" in window)) {
+          console.log("This browser does not support notification");
+        } else if (Notification.permission === "granted") {
+          var notification = new Notification(
+            "Thanks for granting this permission.",
+            notifyConfig
+          );
+
+          setTimeout(() => {
+            new Notification("Try It!", {
+              body: "Click to Google",
+              icon: "/images/favicon.ico"
+            }).onclick = function(e) {
+              // 綁定點擊事件
+              e.preventDefault(); // prevent the browser from focusing the Notification's tab
+              window.open("http://www.google.com/"); // 打開特定網頁
+            };
+          }, 2000);
+        } else if (Notification.permission !== "denied") {
+          Notification.requestPermission(function(permission) {
+            if (permission === "granted") {
+              var notification = new Notification("Hi there!", notifyConfig);
+            }
+          });
+        }
+      });
+    </script>
+  </head>
+  <body>
+    Notification Hello world!
+  </body>
+</html>
