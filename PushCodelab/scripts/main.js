@@ -23,6 +23,7 @@
 
 var PublicKey = localStorage.getItem("PublicKey");
 if (!PublicKey) {
+  window.open("https://web-push-codelab.glitch.me/");
   localStorage.setItem(
     "PublicKey",
     (PublicKey = prompt("Please enter PublicKey", ""))
